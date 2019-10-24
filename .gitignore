@@ -1,2 +1,5 @@
+/insight_testsuite
 .vscode
+*.txt
 *.csv
+.~*
