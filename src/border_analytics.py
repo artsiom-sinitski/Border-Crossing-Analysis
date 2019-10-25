@@ -1,18 +1,20 @@
 """
 Border crossing analysis coding challenge
 """
+import os
 import csv
-# from operator import itemgetter
-# from enum import Enum
 
 
 # TODO: - handle the header of the CSV file
 #       - pass the path as command line arguments
 def load_data(path="./input/Border_Crossing_Entry_Data-DEV-11.csv"):
-    # read from csv file - Border, Date, Measure, Value fields
+    """
+    Reads from csv file - Border, Date, Measure & Value fields.
+    Also, generates the list of total monthly border crossings per border/measure
+    """
     # "idx_list" keeps track of indicies of crossing entity objects in 'crossings_list'
     idx_list = []
-    # each item in 'crossings_list' is a crossing entity object (as dictionary)
+    # each item in 'crossings_list' is a dicitonary that holds a crossing entity object
     crossings_list = []
 
     with open(path) as csvFile:
@@ -25,11 +27,9 @@ def load_data(path="./input/Border_Crossing_Entry_Data-DEV-11.csv"):
             key = border + ',' + date + ',' + measure
 
             if key in idx_list:
-                #print("key exists!!")
                 idx = idx_list.index(key)
                 crossings_list[idx]["value"] += value
             else:
-                #print("key NOT found!!")
                 idx_list.append(key)
                 crossing_entity = {
                                     "date"   : date,
@@ -46,13 +46,18 @@ def load_data(path="./input/Border_Crossing_Entry_Data-DEV-11.csv"):
 
 
 def print_list(to_print):
+    """
+    Prints each element of a list on a new line
+    """
     for item in to_print:
         print(item)
 
 
 def sort_data(lst_to_sort):
-    # sort the list of crossing entities by the
-    # date, value, border & measure in desc order
+    """
+    sorts the list of crossing entities by fields:
+    date, value, border & measure in descending order
+    """
     sorted_list = list(lst_to_sort)
 
     # Need to call sort() in reverse order of "sortby" fields.
@@ -73,16 +78,19 @@ def sort_data(lst_to_sort):
 
 
 def calc_moving_avg(input_list):
-    #calculate moving averages
+    """
+    calculates monthly moving averages by Border & Measure fields
+    """
     avg_list = list(input_list)
     avg_list_len = len(avg_list)
 
     # each element of 'pk_entity_list' list is a dictionary with 2 fields:
-    # the primary key (PK) := "border || measure" string
-    # the moving average value
+    # (1) primary key (PK) := "border || measure" string
+    # (2) moving average value
     pk_entity_list = []
 
-    # each element of element of 'pk_entity_list' list is a PK string
+    # this list elements positions are used as index hooks into 'pk_entity_list'
+    # each element of 'pk_entity_list' list is a PK string
     pk_list = []
 
     # traverse list in reverse order
@@ -109,15 +117,24 @@ def calc_moving_avg(input_list):
             pk_entity_list[idx]["running_avg"] = new_run_average
         
     print("\n\n*** List with moving averages ***")
-    print("Avg list len:", avg_list_len)
     print_list(avg_list)
 
     return avg_list
 
 
-def generate_report():
-    #gen data report
-    print()
+def generate_report(input_list):
+    """generates 'report.csv' file and saves it to './output' folder
+    """
+    try:
+        with open('./output/report.csv', 'w', encoding='utf8', newline='') as csvFile:
+            csv_columns = ['border','date','measure','value','average']
+            writer = csv.DictWriter(csvFile, fieldnames=csv_columns)
+            writer.writeheader()
+            for data in input_list:
+                writer.writerow(data)
+    except OSError as e:
+            print("I/O error({0}): {1}".format(e.errno, e.strerror))    
+    return
 
 
 if __name__ == '__main__':
@@ -129,6 +146,8 @@ if __name__ == '__main__':
     # path = "./input/Border_Crossing_Entry_Data-DEV-11.csv"
     # path = "./input/Border_Crossing_Entry_Data-DEV-TieSort.csv"
     path = "./input/Border_Crossing_Entry_Data-DEV-Avg.csv"
+
     crossings_list = load_data(path)
     sorted_crossings_list = sort_data(crossings_list)
     averages_list = calc_moving_avg(sorted_crossings_list)
+    generate_report(averages_list)
