@@ -1,5 +1,6 @@
 """
-Border crossing analysis coding challenge
+'Border crossing analysis' coding challenge for 
+Insight data engeneering program.
 
 Author: Artsiom Sinitski
 Email:  artsiom.vs@gmail.com
@@ -13,7 +14,7 @@ def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
     """
     Reads date from the csv file. Csv file header with columns name is skipped.
     Data columns that are picked - Border, Date, Measure & Value fields.
-    Also, generates the list of total monthly border crossings per border/measure
+    Also, generates the list of total monthly border crossings per border/measure.
     """
     print("---> Loading data...")
 
@@ -57,9 +58,10 @@ def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
     return crossings_list
 
 
+
 def sort_data(lst_to_sort):
     """
-    sorts the list of crossing entities by fields:
+    Sorts the list of crossing entities by fields:
     date, value, border & measure in descending order
     """
     print("---> Sorting the data...")
@@ -80,13 +82,13 @@ def sort_data(lst_to_sort):
     # print("\n\n*** Sorted list ***")
     # print_list(sorted_list)
     print("     Finished sorting the data.\n")
-
     return sorted_list
+
 
 
 def calc_moving_avg(input_list):
     """
-    calculates monthly moving averages by Border & Measure fields
+    Calculates monthly moving averages by Border & Measure fields
     """
     print("---> Calculating moving averages...")
 
@@ -128,13 +130,13 @@ def calc_moving_avg(input_list):
     # print("\n\n*** List with moving averages ***")
     # print_list(avg_list)
     print("     Finished calculating moving averages.\n")
-
     return avg_list
+
 
 
 def generate_report(input_list, path="./output/report.csv"):
     """
-    generates the 'report.csv' file and saves it to 'output' folder
+    Generates the 'report.csv' file and saves it to 'output' folder
     """
     print("---> Generating the report...")
 
@@ -153,12 +155,15 @@ def generate_report(input_list, path="./output/report.csv"):
     return
 
 
+
 def print_list(to_print):
     """
     Prints each element of a list on a new line
+    Used this function for debugging purposes only.
     """
     for item in to_print:
         print(item)
+
 
 
 if __name__ == '__main__':

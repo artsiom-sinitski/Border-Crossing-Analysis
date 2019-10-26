@@ -1,7 +1,9 @@
-/insight_testsuite
+.gitignore
+/insight_testsuite/*
 /logs
 .vscode
 *.txt
 *.csv
 *.xlsx
 .~*
+
