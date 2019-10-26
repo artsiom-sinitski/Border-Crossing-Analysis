@@ -1,4 +1,5 @@
 /insight_testsuite
+/logs
 .vscode
 *.txt
 *.csv

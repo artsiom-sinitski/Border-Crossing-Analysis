@@ -1,22 +1,21 @@
 """
 Border crossing analysis coding challenge
+
+Author: Artsiom Sinitski
+Email:  artsiom.vs@gmail.com
+Date:   10/27/2019
 """
-import os
 import csv
 from argparse import ArgumentParser
 
 
-def load_data(path="./input/Border_Crossing_Entry_Data-DEV-11.csv"):
+def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
     """
     Reads date from the csv file. Csv file header with columns name is skipped.
     Data columns that are picked - Border, Date, Measure & Value fields.
     Also, generates the list of total monthly border crossings per border/measure
     """
-    # path = "./input/Border_Crossing_Entry_Data-DEV-11.csv"
-    # path = "./input/Border_Crossing_Entry_Data-DEV-TieSort.csv"
-    # path = "./input/Border_Crossing_Entry_Data-DEV-Avg.csv"
-    path = "./input/Border_Crossing_Entry_Data-DEV-Insight.csv"
-    # path = "./input/Border_Crossing_Entry_Data.csv"
+    print("---> Loading data...")
 
     # "idx_list" keeps track of indicies of crossing entity objects in 'crossings_list'
     idx_list = []
@@ -54,7 +53,7 @@ def load_data(path="./input/Border_Crossing_Entry_Data-DEV-11.csv"):
 
     # print("\n# of crossing entries: ", len(crossings_list))
     # print_list(crossings_list)
-
+    print("     Finished loading data.\n")
     return crossings_list
 
 
@@ -63,6 +62,8 @@ def sort_data(lst_to_sort):
     sorts the list of crossing entities by fields:
     date, value, border & measure in descending order
     """
+    print("---> Sorting the data...")
+
     sorted_list = list(lst_to_sort)
 
     # Need to call sort() in reverse order of "sortby" fields.
@@ -78,6 +79,7 @@ def sort_data(lst_to_sort):
 
     # print("\n\n*** Sorted list ***")
     # print_list(sorted_list)
+    print("     Finished sorting the data.\n")
 
     return sorted_list
 
@@ -86,6 +88,8 @@ def calc_moving_avg(input_list):
     """
     calculates monthly moving averages by Border & Measure fields
     """
+    print("---> Calculating moving averages...")
+
     avg_list = list(input_list)
     avg_list_len = len(avg_list)
 
@@ -123,15 +127,19 @@ def calc_moving_avg(input_list):
         
     # print("\n\n*** List with moving averages ***")
     # print_list(avg_list)
+    print("     Finished calculating moving averages.\n")
 
     return avg_list
 
 
-def generate_report(input_list):
-    """generates 'report.csv' file and saves it to './output' folder
+def generate_report(input_list, path="./output/report.csv"):
     """
+    generates the 'report.csv' file and saves it to 'output' folder
+    """
+    print("---> Generating the report...")
+
     try:
-        with open('./output/report.csv', 'w', encoding='utf8', newline='') as csvFile:
+        with open(path, 'w', encoding='utf8', newline='') as csvFile:
             csv_columns = ['border','date','measure','value','average']
             writer = csv.DictWriter(csvFile, fieldnames=csv_columns)
             writer.writeheader()
@@ -139,7 +147,9 @@ def generate_report(input_list):
                 writer.writerow(data)
     except OSError as e:
             print("Failed to generate the report file!")
-            print("I/O error({0}): {1}".format(e.errno, e.strerror))    
+            print("I/O error({0}): {1}".format(e.errno, e.strerror))
+
+    print("     Finished generating the report.\n")   
     return
 
 
@@ -152,12 +162,27 @@ def print_list(to_print):
 
 
 if __name__ == '__main__':
-    # print('Border crossing analysis report:\n')
+    print('\n========== Border crossing analysis started ==========\n')
+
+    # initialize the command line arguments parser
+    parser = ArgumentParser(description='Border crossing analysis app.')
+    parser.add_argument('input_path', help='Input data csv file path')
+    parser.add_argument('output_path', help='Output path for the report')
+    args = parser.parse_args()
+
+    # retrieve input/output pathes from the command line
+    in_path = args.input_path
+    out_path = args.output_path
+
+    # initialize the list variables
     crossings_list = []
     sorted_crossings_list = []
     averages_list = []
 
-    crossings_list = load_data()
+    # load the data, sort it, calculate avgs & generate the report
+    crossings_list = load_data(in_path)
     sorted_crossings_list = sort_data(crossings_list)
     averages_list = calc_moving_avg(sorted_crossings_list)
-    generate_report(averages_list)
+    generate_report(averages_list, out_path)
+
+    print('========== Border crossing analysis ended! ==========\n')
