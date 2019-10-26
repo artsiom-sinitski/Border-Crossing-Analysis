@@ -3,54 +3,59 @@ Border crossing analysis coding challenge
 """
 import os
 import csv
+from argparse import ArgumentParser
 
 
-# TODO: - handle the header of the CSV file
-#       - pass the path as command line arguments
 def load_data(path="./input/Border_Crossing_Entry_Data-DEV-11.csv"):
     """
-    Reads from csv file - Border, Date, Measure & Value fields.
+    Reads date from the csv file. Csv file header with columns name is skipped.
+    Data columns that are picked - Border, Date, Measure & Value fields.
     Also, generates the list of total monthly border crossings per border/measure
     """
+    # path = "./input/Border_Crossing_Entry_Data-DEV-11.csv"
+    # path = "./input/Border_Crossing_Entry_Data-DEV-TieSort.csv"
+    # path = "./input/Border_Crossing_Entry_Data-DEV-Avg.csv"
+    path = "./input/Border_Crossing_Entry_Data-DEV-Insight.csv"
+    # path = "./input/Border_Crossing_Entry_Data.csv"
+
     # "idx_list" keeps track of indicies of crossing entity objects in 'crossings_list'
     idx_list = []
-    # each item in 'crossings_list' is a dicitonary that holds a crossing entity object
+    # each item in 'crossings_list' is a dictionary that holds a crossing entity object
     crossings_list = []
 
-    with open(path) as csvFile:
-        csvData = csv.reader(csvFile)
-        for row in csvData:
-            border = row[3]
-            date = row[4] 
-            measure = row[5]
-            value = int(row[6])
-            key = border + ',' + date + ',' + measure
+    try:
+        with open(path) as csvFile:
+            csvData = csv.reader(csvFile)
+            #skip the header
+            next(csvData, None) 
+            for row in csvData:
+                border = row[3]
+                date = row[4] 
+                measure = row[5]
+                value = int(row[6])
 
-            if key in idx_list:
-                idx = idx_list.index(key)
-                crossings_list[idx]["value"] += value
-            else:
-                idx_list.append(key)
-                crossing_entity = {
-                                    "date"   : date,
-                                    "border" : border,
-                                    "measure": measure,
-                                    "value"  : value
-                                  }
-                crossings_list.append(crossing_entity)
+                key = border + ',' + date + ',' + measure
 
-    print("\n# of crossing entries: ", len(crossings_list))
-    print_list(crossings_list)
+                if key in idx_list:
+                    idx = idx_list.index(key)
+                    crossings_list[idx]["value"] += value
+                else:
+                    idx_list.append(key)
+                    crossing_entity = {
+                                        "date"   : date,
+                                        "border" : border,
+                                        "measure": measure,
+                                        "value"  : value
+                                    }
+                    crossings_list.append(crossing_entity)
+    except OSError as e:
+        print("Failed to read the input csv file!")
+        print("I/O error({0}): {1}".format(e.errno, e.strerror))
+
+    # print("\n# of crossing entries: ", len(crossings_list))
+    # print_list(crossings_list)
 
     return crossings_list
-
-
-def print_list(to_print):
-    """
-    Prints each element of a list on a new line
-    """
-    for item in to_print:
-        print(item)
 
 
 def sort_data(lst_to_sort):
@@ -71,8 +76,8 @@ def sort_data(lst_to_sort):
     # sorted_list.sort(key=lambda k: (k["measure"], k["border"]))
     # sorted_list.sort(key=lambda k: (k["date"], k["value"]), reverse=True)
 
-    print("\n\n*** Sorted list ***")
-    print_list(sorted_list)
+    # print("\n\n*** Sorted list ***")
+    # print_list(sorted_list)
 
     return sorted_list
 
@@ -116,8 +121,8 @@ def calc_moving_avg(input_list):
             avg_list[i].update({"average": run_average})
             pk_entity_list[idx]["running_avg"] = new_run_average
         
-    print("\n\n*** List with moving averages ***")
-    print_list(avg_list)
+    # print("\n\n*** List with moving averages ***")
+    # print_list(avg_list)
 
     return avg_list
 
@@ -133,21 +138,26 @@ def generate_report(input_list):
             for data in input_list:
                 writer.writerow(data)
     except OSError as e:
+            print("Failed to generate the report file!")
             print("I/O error({0}): {1}".format(e.errno, e.strerror))    
     return
 
 
+def print_list(to_print):
+    """
+    Prints each element of a list on a new line
+    """
+    for item in to_print:
+        print(item)
+
+
 if __name__ == '__main__':
-    print('Border crossing analysis report:\n')
+    # print('Border crossing analysis report:\n')
     crossings_list = []
     sorted_crossings_list = []
     averages_list = []
 
-    # path = "./input/Border_Crossing_Entry_Data-DEV-11.csv"
-    # path = "./input/Border_Crossing_Entry_Data-DEV-TieSort.csv"
-    path = "./input/Border_Crossing_Entry_Data-DEV-Avg.csv"
-
-    crossings_list = load_data(path)
+    crossings_list = load_data()
     sorted_crossings_list = sort_data(crossings_list)
     averages_list = calc_moving_avg(sorted_crossings_list)
     generate_report(averages_list)
