@@ -1,9 +1,5 @@
 # Insight Data Engineering Program coding challenge
------
-## Border Crossing Analysis application
 
-# Insight Data Engineering Program coding challenge
------
 ## Border Crossing Analysis application
 
 ### Table of Contents:
@@ -20,7 +16,7 @@ For this challenge, I needed to create an application that calculates the total 
 
 ### Instructions
 
-App requires [Python] (https://www.python.org/downloads/) v3.7+ to run.
+App requires [Python](https://www.python.org/downloads/) v3.7+ to run.
 
 NOTE:
 if your machine runs Windows To execute the application in Windows
