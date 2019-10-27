@@ -4,19 +4,22 @@ Insight data engeneering program.
 
 Author: Artsiom Sinitski
 Email:  artsiom.vs@gmail.com
-Date:   10/27/2019
+Date:   10/28/2019
 """
 import csv
+import time
 from argparse import ArgumentParser
 
 
 def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
     """
-    Reads date from the csv file. Csv file header with columns name is skipped.
-    Data columns that are picked - Border, Date, Measure & Value fields.
-    Also, generates the list of total monthly border crossings per border/measure.
+    Reads data from the input csv file. The header with column names is skipped.
+    Columns that are selected - Border, Date, Measure & Value fields.
+    Also, counts total monthly border crossings per border/measure and saves it
+    to a list as 'Crossing Entity' dictionary for further processing.
     """
     print("---> Loading data...")
+    print("Path: ", path)
 
     # "idx_list" keeps track of indicies of crossing entity objects in 'crossings_list'
     idx_list = []
@@ -46,15 +49,16 @@ def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
                                         "border" : border,
                                         "measure": measure,
                                         "value"  : value
-                                    }
+                                      }
                     crossings_list.append(crossing_entity)
     except OSError as e:
         print("Failed to read the input csv file!")
         print("I/O error({0}): {1}".format(e.errno, e.strerror))
+        return
 
     # print("\n# of crossing entries: ", len(crossings_list))
     # print_list(crossings_list)
-    print("     Finished loading data.\n")
+    print("     Finished!\n")
     return crossings_list
 
 
@@ -81,7 +85,7 @@ def sort_data(lst_to_sort):
 
     # print("\n\n*** Sorted list ***")
     # print_list(sorted_list)
-    print("     Finished sorting the data.\n")
+    print("     Finished!\n")
     return sorted_list
 
 
@@ -129,7 +133,7 @@ def calc_moving_avg(input_list):
         
     # print("\n\n*** List with moving averages ***")
     # print_list(avg_list)
-    print("     Finished calculating moving averages.\n")
+    print("     Finished!\n")
     return avg_list
 
 
@@ -150,8 +154,9 @@ def generate_report(input_list, path="./output/report.csv"):
     except OSError as e:
             print("Failed to generate the report file!")
             print("I/O error({0}): {1}".format(e.errno, e.strerror))
+            return
 
-    print("     Finished generating the report.\n")   
+    print("     Finished!\n")   
     return
 
 
@@ -184,10 +189,16 @@ if __name__ == '__main__':
     sorted_crossings_list = []
     averages_list = []
 
+    start_time = time.time()
+
     # load the data, sort it, calculate avgs & generate the report
     crossings_list = load_data(in_path)
     sorted_crossings_list = sort_data(crossings_list)
     averages_list = calc_moving_avg(sorted_crossings_list)
     generate_report(averages_list, out_path)
 
-    print('========== Border crossing analysis ended! ==========\n')
+    end_time = time.time()
+
+    print("----------------------------------")
+    print("Execution time: %s seconds\n" % round(end_time - start_time, 2))
+    print('========== Border crossing analysis completed! ==========\n')
