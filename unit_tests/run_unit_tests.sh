@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/usr/bin/python3
 
 export PYTHONPATH=..
 
@@ -6,5 +7,5 @@ export PYTHONPATH=..
 # python ./test_border_analytics.py
 
 # For *nix environment
-python3 ./test_border_analytics.py
+python3 ./test_border_analytics.py -v
 
