@@ -159,7 +159,7 @@ class TestBorderAnalyticsMethods(unittest.TestCase):
         # {'Date': '01/01/2017 12:00:00 AM', 'Border': 'US-Canada Border', 'Value': 39, 'Measure': 'Rail Containers Full'}
         
         self.assertEqual(sorted_len, avgs_len, "Wrong averages list length!")
-        self.assertEqual(avgs_list[0]["Average"], 8, "Average value is incorrect!")
+        self.assertEqual(avgs_list[0]["Average"], 9, "Average value is incorrect!")
         self.assertEqual(avgs_list[1]["Average"], 2, "Average value is incorrect!")
         self.assertEqual(avgs_list[2]["Average"], 7, "Average value is incorrect!")
         self.assertEqual(avgs_list[3]["Average"], 0, "Average value is incorrect!")

@@ -8,6 +8,7 @@ Date:   10/28/2019
 """
 import csv
 import time
+from math import floor
 from argparse import ArgumentParser
 
 
@@ -125,7 +126,14 @@ def calc_moving_avg(input_list):
         else:
             idx = pk_list.index(key)
             run_average = pk_entity_list[idx]["running_avg"]
-            new_run_average = round((value + run_average)/2)
+
+            n = (value + run_average)/2
+            # need to do the check below to avoid inconsistent roun() function behaviour
+            # due to the "round half to even" approach when rounding numbers
+            if n-floor(n) == 0.5:
+                new_run_average = int(floor(n+0.5)) 
+            else:
+                new_run_average = round(n)
 
             avg_list[i].update({"Average": run_average})
             pk_entity_list[idx]["running_avg"] = new_run_average
