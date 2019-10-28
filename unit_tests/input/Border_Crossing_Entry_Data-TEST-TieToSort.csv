@@ -1,0 +1,14 @@
+Port Name,State,Port Code,Border,Date,Measure,Value,Location
+Warroad,Minnesota,3423,US-Canada Border,06/01/2019 12:00:00 AM,Truck Containers Full,13,(1421,-234124)
+Warroad,Minnesota,3423,US-Canada Border,06/01/2019 12:00:00 AM,Truck Containers Empty,10,
+Roseau,Minnesota,3426,US-Canada Border,06/01/2019 12:00:00 AM,Truck Containers Empty,3,
+Roseau,Minnesota,3426,US-Canada Border,06/01/2019 12:00:00 AM,Buses,13,
+Roseau,Minnesota,3426,US-Canada Border,06/01/2019 12:00:00 AM,Bus Passengers,13,
+Del Rio,Texas,2302,US-Mexico Border,06/01/2019 12:00:00 AM,Pedestrians,13,
+Detroit,Michigan,3801,US-Canada Border,06/02/2019 12:00:00 AM,Rail Containers Full,13,
+Station-3,Texas,2357,US-Mexico Border,06/02/2019 12:00:00 AM,Personal Vehicle Passengers,13,
+Alcan,Alaska,3104,US-Canada Border,06/01/2019 12:00:00 AM,Trucks,13,
+Detroit,Michigan,3801,US-Canada Border,06/01/2019 12:00:00 AM,Personal Vehicles,13,
+Detroit,Michigan,3801,US-Canada Border,06/01/2019 12:00:00 AM,Rail Containers Empty,13,
+Station-3,Texas,2357,US-Mexico Border,04/01/2019 12:00:00 AM,Personal Vehicles,13,
+Detroit,Michigan,3801,US-Canada Border,04/01/2019 12:00:00 AM,Personal Vehicles,13,

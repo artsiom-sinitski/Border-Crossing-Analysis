@@ -19,7 +19,6 @@ def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
     to a list as 'Crossing Entity' dictionary for further processing.
     """
     print("---> Loading data...")
-    print("Path: ", path)
 
     # "idx_list" keeps track of indicies of crossing entity objects in 'crossings_list'
     idx_list = []

@@ -1,0 +1,12 @@
+Port Name,State,Port Code,Border,Date,Measure,Value,Location
+Del Rio,Texas,2302,US-Mexico Border,11/01/2017 12:00:00 AM,Truck Containers Empty,4,(20 30)
+Pembina,North Dakota,3401,US-Canada Border,03/01/2017 12:00:00 AM,Rail Containers Full,20,(120 230)
+Del Rio,Texas,2302,US-Mexico Border,09/01/2017 12:00:00 AM,Truck Containers Empty,2, (201 301)
+Rio Grande City,Texas,2307,US-Mexico Border,09/01/2017 12:00:00 AM,Personal Vehicles,7,(204 304)
+Pembina,North Dakota,3401,US-Canada Border,02/01/2017 12:00:00 AM,Rail Containers Full,1,(2010 3010)
+Rio Grande City,Texas,2307,US-Mexico Border,10/01/2017 12:00:00 AM,Personal Vehicles,3,(2011 3011)
+Roma,Texas,2310,US-Mexico Border,10/01/2017 12:00:00 AM,Personal Vehicles,5,(2045 3045)
+Del Rio,Texas,2302,US-Mexico Border,10/01/2017 12:00:00 AM,Truck Containers Empty,15,(2090 3090)
+Bridgewater,Maine,127,US-Canada Border,09/01/2017 12:00:00 AM,Personal Vehicles,38,(203 303)
+Del Rio,Texas,2302,US-Mexico Border,08/01/2017 12:00:00 AM,Truck Containers Empty,1,(205 306)
+Pembina,North Dakota,3401,US-Canada Border,01/01/2017 12:00:00 AM,Rail Containers Full,39,(2 3)
