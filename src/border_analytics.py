@@ -40,14 +40,14 @@ def load_data(path="./input/Border_Crossing_Entry_Data.csv"):
 
                 if key in idx_list:
                     idx = idx_list.index(key)
-                    crossings_list[idx]["value"] += value
+                    crossings_list[idx]["Value"] += value
                 else:
                     idx_list.append(key)
                     crossing_entity = {
-                                        "date"   : date,
-                                        "border" : border,
-                                        "measure": measure,
-                                        "value"  : value
+                                        "Date"   : date,
+                                        "Border" : border,
+                                        "Measure": measure,
+                                        "Value"  : value
                                       }
                     crossings_list.append(crossing_entity)
     except OSError as e:
@@ -74,10 +74,10 @@ def sort_data(lst_to_sort):
     # Need to call sort() in reverse order of "sortby" fields.
     # First, do a sort by "border", then - by "measure",
     # then - by "value" and lastly, sort by the "date".
-    sorted_list.sort(key=lambda k: k["border"])
-    sorted_list.sort(key=lambda k: k["measure"])
-    sorted_list.sort(key=lambda k: k["value"], reverse=True)
-    sorted_list.sort(key=lambda k: k["date"], reverse=True)
+    sorted_list.sort(key=lambda k: k["Border"])
+    sorted_list.sort(key=lambda k: k["Measure"])
+    sorted_list.sort(key=lambda k: k["Value"], reverse=True)
+    sorted_list.sort(key=lambda k: k["Date"], reverse=True)
     # sorted(list_2_sort, key=itemgetter("date", "value"), reverse=True)
     # sorted_list.sort(key=lambda k: (k["measure"], k["border"]))
     # sorted_list.sort(key=lambda k: (k["date"], k["value"]), reverse=True)
@@ -109,13 +109,13 @@ def calc_moving_avg(input_list):
 
     # traverse list in reverse order
     for i in range(avg_list_len-1, -1, -1):
-        border = avg_list[i].get("border")
-        measure = avg_list[i].get("measure")
-        value = avg_list[i].get("value")
+        border = avg_list[i].get("Border")
+        measure = avg_list[i].get("Measure")
+        value = avg_list[i].get("Value")
         key = border  + ',' + measure
 
         if key not in pk_list:
-            avg_list[i].update({"average": 0})
+            avg_list[i].update({"Average": 0})
             pk_entity = {
                          "prim_key"    : key,
                          "running_avg" : value
@@ -125,9 +125,9 @@ def calc_moving_avg(input_list):
         else:
             idx = pk_list.index(key)
             run_average = pk_entity_list[idx]["running_avg"]
-            new_run_average = round( (value + run_average)/2 )
+            new_run_average = round((value + run_average)/2)
 
-            avg_list[i].update({"average": run_average})
+            avg_list[i].update({"Average": run_average})
             pk_entity_list[idx]["running_avg"] = new_run_average
         
     # print("\n\n*** List with moving averages ***")
@@ -145,7 +145,7 @@ def generate_report(input_list, path="./output/report.csv"):
 
     try:
         with open(path, 'w', encoding='utf8', newline='') as csvFile:
-            csv_columns = ['border','date','measure','value','average']
+            csv_columns = ['Border','Date','Measure','Value','Average']
             writer = csv.DictWriter(csvFile, fieldnames=csv_columns)
             writer.writeheader()
             for data in input_list:

@@ -1,4 +1,5 @@
 .gitignore
+/insight_testsuite/temp
 __pycache__
 /logs
 .vscode
